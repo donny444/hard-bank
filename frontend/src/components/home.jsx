@@ -4,23 +4,26 @@ export default function HomePage() {
     return (
         <>
             <NavBar />
-            <Profile />
-            <Balance />
-            <Transaction />
         </>
     )
 }
 
-function Profile() {
+function Profile({ data }) {
     return (
         <div>
+            <div>
+                <img src="src/assets/profile.png" alt="profile picture" />
+                <p>{data.username}</p>
+            </div>
+            <p>{data.accountId}</p>
         </div>
     )
 }
 
-function Balance() {
+function Balance({ data }) {
     return (
         <div>
+            <h2>{data.balance}</h2>
         </div>
     )
 }
@@ -28,6 +31,7 @@ function Balance() {
 function Transaction() {
     return (
         <div>
+            <button>Transfer</button>
         </div>
     )
 }

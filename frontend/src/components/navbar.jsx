@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom"
+
 export default function NavBar() {
     return (
         <div className="navbar">
-            <img className="navbar-logo" src="logo.jpg" alt="hardbank logo" />
+            <Link to="/"><img className="navbar-logo" src="logo.jpg" alt="hardbank logo" /></Link>
             <div>
-                <button className="navber-login">Login</button>
-                <button className="navbar-register">Register</button>
+                <Link to="/login"><button className="navber-login">Login</button></Link>
+                <Link to="/register"><button className="navbar-register">Register</button></Link>
             </div>
         </div>
     )

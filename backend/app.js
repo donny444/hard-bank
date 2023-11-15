@@ -1,4 +1,4 @@
-require("dontnv").config()
+require("dotenv").config()
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -19,15 +19,9 @@ connection.connect(function(err) {
     console.log(`Connected as ID ${connection.threadId}`);
 })
 
-const route = require("./routes/route.js");
-const loginRoute = require("./routes/login_route.js");
-const registerRoute = require("./routes/register.route.js");
-const transactionRoute = require("./routes/transaction_route.js");
+const routes = require("./router/routes.js");
 
-app.use("/", route);
-app.use("/login", loginRoute);
-app.use("/register", registerRoute);
-app.use("/transaction", transactionRoute);
+app.use("/", routes);
 
 app.use(function (req, res) {
     res.status(404).json({

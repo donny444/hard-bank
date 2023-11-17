@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NavBar from "./navbar";
 import Footer from "./footer";
 
@@ -17,16 +17,37 @@ function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [response, setResponse] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const apiUrl = "http://localhost:3715/login"
         try {
-            await authenticate(username, password); // Assuming you have the authenticate function
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            if(!response.ok) {
+                const errMsg= await response.text();
+                throw new Error(errMsg || "Failed to login");
+            }
+            const data = await response.json()
+            console.log(data);
+            localStorage.setItem("userToken", data.token);
+            setResponse(data);
+            console.log(response);
             const from = location.state?.from || "/"
             navigate(from)
         } catch(err) {
-            setError("Invalid username or password")
+            setError(err.message)
         }
     }
     return (
@@ -55,6 +76,7 @@ function LoginForm() {
                         required />
                 </div>
                 {error && <p>{error}</p>}
+                {response && <p>{response}</p>}
                 <input className="auth-submit" type="submit" value="Login"></input>
             </form>
         </div>

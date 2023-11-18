@@ -6,6 +6,7 @@ export default function HomePage() {
     return (
         <>
             <NavBar />
+            <Home />
             <Footer />
         </>
     )
@@ -20,8 +21,11 @@ function Home() {
         const fetchData = async () => {
             const apiUrl = "http://localhost:3715/";
             const options = {
+                headers: {
+                    "x-access-token": localStorage.getItem("userToken")
+                },
                 body: {
-                    token: localStorage.getItem("userToken")
+                    id: localStorage.getItem("userId")
                 }
             }
 
@@ -41,6 +45,7 @@ function Home() {
                 setLoading(false);
             }
         }
+        fetchData();
     })
 
     return (
@@ -62,33 +67,5 @@ function Home() {
                 </div>
             }
         </>
-    )
-}
-
-function Profile({ data }) {
-    return (
-        <div>
-            <div>
-                <img src="src/assets/profile.png" alt="profile picture" />
-                <p>{data.username}</p>
-            </div>
-            <p>{data.accountId}</p>
-        </div>
-    )
-}
-
-function Balance({ data }) {
-    return (
-        <div>
-            <h2>{data.balance}</h2>
-        </div>
-    )
-}
-
-function Transaction() {
-    return (
-        <div>
-            <button>Transfer</button>
-        </div>
     )
 }

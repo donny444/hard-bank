@@ -42,6 +42,7 @@ function LoginForm() {
             const data = await response.json()
             console.log(data);
             localStorage.setItem("userToken", data.token);
+            localStorage.setItem("userId", data.id);
             setResponse(data);
             console.log(response);
             const from = location.state?.from || "/"
@@ -50,6 +51,7 @@ function LoginForm() {
             setError(err.message)
         }
     }
+
     return (
         <div>
             <h2 className="auth-header">Login</h2>

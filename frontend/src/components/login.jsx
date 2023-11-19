@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavBar from "./navbar";
 import Footer from "./footer";
+import { AuthProvider } from "./auth";
 
 export default function LoginPage() {
     return (
@@ -42,6 +43,7 @@ function LoginForm() {
             const data = await response.json()
             console.log(data);
             localStorage.setItem("userToken", data.token);
+            AuthProvider.checkAuth();
             localStorage.setItem("userId", data.id);
             setResponse(data);
             console.log(response);

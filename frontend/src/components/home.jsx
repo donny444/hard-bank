@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import NavBar from "./navbar";
 import Footer from "./footer";
+import { AuthProvider } from "./auth";
 
 export default function HomePage() {
     return (
@@ -18,9 +19,11 @@ function Home() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        AuthProvider.checkAuth();
         const fetchData = async () => {
             const apiUrl = "http://localhost:3715/";
             const options = {
+                method: "POST",
                 headers: {
                     "x-access-token": localStorage.getItem("userToken")
                 },
@@ -46,7 +49,7 @@ function Home() {
             }
         }
         fetchData();
-    })
+    }, []);
 
     return (
         <>

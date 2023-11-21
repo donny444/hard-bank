@@ -19,27 +19,36 @@ body {
 }
 
 .navbar-logo {
-    /* Add any specific styling for your logo here */
-    width: 80px;
+    width: 90px;
 }
 
-.navber-login, .navbar-register {
+.navbar-login, .navbar-register {
     margin: 0 5px;
-    padding: 5px 10px;
-    border: none;
+    padding: 5px 12px;
     border-radius: 4px;
     font-weight: bolder;
+    font-size: 14px;
     cursor: pointer;
 }
 
-.navber-login {
+.navbar-login {
     background-color: #F5F5F5;
     color: #0A0A0A;
+    border: 2px solid #F5F5F5;
 }
 
 .navbar-register {
     background-color: #737373;
     color: #F5F5F5;
+    border: 2px solid #737373;
+}
+
+.navbar-login:hover {
+    border: 2px solid #0A0A0A;
+}
+
+.navbar-register:hover {
+    border: 2px solid #0A0A0A;
 }
 
 .auth-header {
@@ -49,6 +58,8 @@ body {
 }
 
 .auth-form {
+    display: flex;
+    flex-direction: column;
     width: 60%;
     max-width: 720px;
     margin: 0 auto;
@@ -77,18 +88,37 @@ body {
 }
 
 .auth-submit {
-    border: 0;
+    border: 2px solid #59E489;
     border-radius: 4px;
     padding: 8px 16px;
+    margin-top: 1.4em;
     background-color: #59E489;
     color: #0A0A0A;
     font-size: 14px;
     font-weight: bolder;
     cursor: pointer;
+    align-self: flex-end;
+    text-align: center;
 }
 
 .auth-submit:hover {
     border: 2px solid #0A0A0A;
+}
+
+.user-data {
+    width: 80%;
+    background-color: #D9D9D9;
+    border-radius: 4px;
+    margin: 0 auto;
+    padding: 1em;
+}
+.user-profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.user-image {
+    width: 180px;
 }
 
 .transaction-form {
@@ -121,7 +151,7 @@ body {
 }
 
 .transaction-submit {
-    border: 0;
+    border: 2px solid #F5F5F5;
     border-radius: 4px;
     padding: 8px;
     background-color: #F5F5F5;
@@ -129,6 +159,10 @@ body {
     font-size: 14px;
     font-weight: bolder;
     cursor: pointer;
+}
+
+.transaction-submit:hover {
+    border: 2px solid #0A0A0A;
 }
 
 .footer {

@@ -43,7 +43,6 @@ function LoginForm() {
             const data = await response.json()
             console.log(data);
             localStorage.setItem("userToken", data.token);
-            AuthProvider.checkAuth();
             localStorage.setItem("userId", data.id);
             setResponse(data);
             console.log(response);

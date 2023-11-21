@@ -5,7 +5,7 @@ export default function NavBar() {
         <div className="navbar">
             <Link to="/"><img className="navbar-logo" src="logo.jpg" alt="hardbank logo" /></Link>
             <div>
-                <Link to="/login"><button className="navber-login">Login</button></Link>
+                <Link to="/login"><button className="navbar-login">Login</button></Link>
                 <Link to="/register"><button className="navbar-register">Register</button></Link>
             </div>
         </div>

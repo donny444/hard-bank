@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import NavBar from "./navbar";
 import Footer from "./footer";
 import { AuthProvider } from "./auth";
@@ -19,7 +20,6 @@ function Home() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        AuthProvider.checkAuth();
         const fetchData = async () => {
             const apiUrl = "http://localhost:3715/";
             const options = {
@@ -27,9 +27,9 @@ function Home() {
                 headers: {
                     "x-access-token": localStorage.getItem("userToken")
                 },
-                body: {
+                body: JSON.stringify({
                     id: localStorage.getItem("userId")
-                }
+                })
             }
 
             setLoading(true);
@@ -37,11 +37,13 @@ function Home() {
 
             try {
                 const response = await fetch(apiUrl, options);
+                console.log(response);
                 if(!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-                const responseData = await response.json();
-                setData(responseData);
+                //const responseData = await response.json();
+                //console.log(responseData);
+                setData(response);
             } catch(err) {
                 setError(err.message);
             } finally {
@@ -52,23 +54,23 @@ function Home() {
     }, []);
 
     return (
-        <>
+        <div>
             {loading && <div><p>Loading</p></div>}
             {error && <div><p>Error: {error}</p></div>}
             {data &&
-                <div>
-                    <div>
-                        <img src="src/assets/profile.png" alt="profile picture" />
-                        <p>{data.username}</p>
+                <div className="user-data">
+                    <div className="user-profile">
+                        <div>
+                            <img className="user-image"src="src/assets/profile.png" alt="profile picture" />
+                            <p className="user-name">{data.username}</p>
+                        </div>
+                        <div>
+                            <h2 className="user-balance">{data.balance}</h2>
+                        </div>
                     </div>
-                    <div>
-                        <h2>{data.balance}</h2>
-                    </div>
-                    <div>
-                        <button>Transfer</button>
-                    </div>
+                    <Link to="/transaction"><button className="transfer-button">Transfer</button></Link>
                 </div>
             }
-        </>
+        </div>
     )
 }

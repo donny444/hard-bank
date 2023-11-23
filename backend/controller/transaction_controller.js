@@ -1,13 +1,13 @@
 const connection = require("../database.js");
 
 async function Transaction(req, res) {
-    const { startUsername, endUsername, amount } = req.body;
+    const { senderId, receiverUsername, amount } = req.body;
     try {
-        if(!startUsername ||!endUsername || !amount) {
+        if(!senderId ||!receiverUsername || !amount) {
             return res.status(400).json({ message: "Sender, receiver usernames and amount are required" });
         }
 
-        if(startUsername === endUsername) {
+        if(senderId === receiverUsername) {
             return res.status(400).json({ message: "Sender and receiver shouldn't be the same user" });
         }
 
@@ -16,8 +16,8 @@ async function Transaction(req, res) {
                 throw err;
             }
             connection.query(
-                "SELECT * FROM Users WHERE username = ?",
-                [startUsername],
+                "SELECT * FROM Users WHERE id = ?",
+                [senderId],
                 async (err, results) => {
                     if(err) {
                         connection.rollback(() => {
@@ -32,10 +32,9 @@ async function Transaction(req, res) {
                     if(amount > senderBalance) {
                         return res.status(400).json({ message: "Insufficient funds" });
                     }
-                    const senderId = results[0].id;
                     connection.query(
                         "SELECT * FROM Users WHERE username = ?",
-                        [endUsername],
+                        [receiverUsername],
                         (err, results) => {
                             if(err) {
                                 connection.rollback(() => {
@@ -47,8 +46,8 @@ async function Transaction(req, res) {
                             }
                             const receiverId = results[0].id;
                             connection.query(
-                                "UPDATE Users SET balance = balance - ? WHERE username = ?",
-                                [amount, startUsername],
+                                "UPDATE Users SET balance = balance - ? WHERE id = ?",
+                                [amount, senderId],
                                 (err, results) => {
                                     if(err) {
                                         connection.rollback(() => {
@@ -58,7 +57,7 @@ async function Transaction(req, res) {
 
                                     connection.query(
                                         "UPDATE Users SET balance = balance + ? WHERE username =?",
-                                        [amount, endUsername],
+                                        [amount, receiverUsername],
                                         (err, results) => {
                                             if(err) {
                                                 connection.rollback(() => {

@@ -1,13 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "./navbar";
-import Footer from "./footer";
 
 export default function RegisterPage() {
     return (
         <>
             <NavBar />
             <RegisterForm />
-            <Footer />
         </>
     )
 }
@@ -15,10 +14,38 @@ export default function RegisterPage() {
 function RegisterForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        const apiUrl = "http://localhost:3715/register";
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        }
+        try {
+            const response = await fetch(apiUrl, options)
+            if(!response.ok) {
+                const errMsg= await response.text();
+                throw new Error(errMsg || "Failed to register");
+            }
+            const responseData = await response.json();
+            setResponse(responseData);
+            navigate("/login")
+        } catch(err) {
+            setError(err.message)
+        }
     }
+
     return (
         <div>
             <h2 className="auth-header">Register</h2>
@@ -31,6 +58,7 @@ function RegisterForm() {
                         placeholder="Your username here"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        maxLength={20}
                         required
                     />
                 </div>
@@ -42,8 +70,10 @@ function RegisterForm() {
                         placeholder="Your password here"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        maxLength={16}
                         required />
                 </div>
+                {error && <p>{error}</p>}
                 <input className="auth-submit" type="submit" value="Register"></input>
             </form>
         </div>

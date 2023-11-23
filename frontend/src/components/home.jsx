@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./navbar";
-import Footer from "./footer";
 import { AuthProvider } from "./auth";
 
 export default function HomePage() {
@@ -9,13 +8,12 @@ export default function HomePage() {
         <>
             <NavBar />
             <Home />
-            <Footer />
         </>
     )
 }
 
 function Home() {
-    const [data, setData] = useState(null);
+    const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -25,7 +23,8 @@ function Home() {
             const options = {
                 method: "POST",
                 headers: {
-                    "x-access-token": localStorage.getItem("userToken")
+                    "x-access-token": localStorage.getItem("userToken"),
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     id: localStorage.getItem("userId")
@@ -33,17 +32,15 @@ function Home() {
             }
 
             setLoading(true);
-            setError(null);
-
+            
             try {
                 const response = await fetch(apiUrl, options);
-                console.log(response);
                 if(!response.ok) {
-                    throw new Error("Network response was not ok");
+                    const errMsg = await response.text();
+                    throw new Error(errMsg || "Network response was not ok");
                 }
-                //const responseData = await response.json();
-                //console.log(responseData);
-                setData(response);
+                const responseData = await response.json();
+                setResponse(responseData);
             } catch(err) {
                 setError(err.message);
             } finally {
@@ -55,17 +52,17 @@ function Home() {
 
     return (
         <div>
-            {loading && <div><p>Loading</p></div>}
-            {error && <div><p>Error: {error}</p></div>}
-            {data &&
+            {loading && <p>Loading</p>}
+            {error && <p>Error: {error}</p>}
+            {response &&
                 <div className="user-data">
                     <div className="user-profile">
                         <div>
                             <img className="user-image"src="src/assets/profile.png" alt="profile picture" />
-                            <p className="user-name">{data.username}</p>
+                            <h2 className="user-name">{response.username}</h2>
                         </div>
                         <div>
-                            <h2 className="user-balance">{data.balance}</h2>
+                            <h2 className="user-balance">Balance: {response.balance}</h2>
                         </div>
                     </div>
                     <Link to="/transaction"><button className="transfer-button">Transfer</button></Link>

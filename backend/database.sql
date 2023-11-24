@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2023 at 11:05 AM
+-- Generation Time: Nov 24, 2023 at 02:23 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -29,7 +29,6 @@ USE `hardbank`;
 -- Table structure for table `transactions`
 --
 
-DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `transaction_id` int(11) NOT NULL,
   `start_user_id` int(11) NOT NULL,
@@ -43,7 +42,16 @@ CREATE TABLE `transactions` (
 
 INSERT INTO `transactions` (`transaction_id`, `start_user_id`, `end_user_id`, `amount`) VALUES
 (1, 2, 1, '100.00'),
-(2, 1, 2, '500.00');
+(2, 1, 2, '500.00'),
+(3, 2, 3, '455.00'),
+(4, 3, 1, '300.00'),
+(5, 1, 4, '300.00'),
+(6, 4, 1, '299.99'),
+(7, 5, 1, '0.00'),
+(8, 1, 5, '1.00'),
+(9, 1, 5, '100.00'),
+(10, 1, 5, '0.50'),
+(11, 1, 8, '0.49');
 
 -- --------------------------------------------------------
 
@@ -51,7 +59,6 @@ INSERT INTO `transactions` (`transaction_id`, `start_user_id`, `end_user_id`, `a
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
@@ -64,9 +71,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `balance`) VALUES
-(1, 'carljohnson', '$2a$10$ego.DsmjO1UNoXzP4PYtLe9qmg6wLMHfeOfjYKces9ZGXl1qZEPYa', '0.00'),
-(2, 'johnwidth', '$2a$10$gTZvMRacrOPxbXMUvwBcP.yxeCt5AVYMTaBnlU2SnlyyRslMCq5ZS', '500.00'),
-(3, 'johndoe', '$2a$10$bCApObFddplzr6RY5zHoneljRSO8/e6/rpkTmD82t1oc0TNss.FYm', '0.00');
+(1, 'carljohnson', '$2a$10$ego.DsmjO1UNoXzP4PYtLe9qmg6wLMHfeOfjYKces9ZGXl1qZEPYa', '198.00'),
+(2, 'johnwidth', '$2a$10$gTZvMRacrOPxbXMUvwBcP.yxeCt5AVYMTaBnlU2SnlyyRslMCq5ZS', '45.00'),
+(3, 'johndoe', '$2a$10$bCApObFddplzr6RY5zHoneljRSO8/e6/rpkTmD82t1oc0TNss.FYm', '155.00'),
+(4, 'imbigsmoke', '$2a$10$wWDyvhrzsHlvgvBnftKCc.WFU4lW27j1.HNTQZ932Y/Y7Mki7iuLW', '0.01'),
+(5, 'ryder10', '$2a$10$IADAIcpGNxgtmn8LAF6Sxuor8ar0M.jrIJ1AaM0qbTlukAIdhU6LS', '101.50'),
+(8, 'janedoe', '$2a$10$wNJSZoVi349bb1iq4NX21.noP8eJZjlJ/MV/0YHdsN4wKQaiImFFW', '0.49');
 
 --
 -- Indexes for dumped tables
@@ -94,13 +104,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

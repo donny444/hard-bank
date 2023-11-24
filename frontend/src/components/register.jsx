@@ -14,7 +14,6 @@ export default function RegisterPage() {
 function RegisterForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
@@ -38,8 +37,6 @@ function RegisterForm() {
                 const errMsg= await response.text();
                 throw new Error(errMsg || "Failed to register");
             }
-            const responseData = await response.json();
-            setResponse(responseData);
             navigate("/login")
         } catch(err) {
             setError(err.message)

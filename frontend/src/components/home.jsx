@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./navbar";
-import { AuthProvider } from "./auth";
 
 export default function HomePage() {
     return (

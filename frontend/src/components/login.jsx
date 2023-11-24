@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavBar from "./navbar";
-import { AuthProvider } from "./auth";
+import { useAuth } from "./auth";
 
 export default function LoginPage() {
     return (
@@ -15,11 +15,12 @@ export default function LoginPage() {
 function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
     
     const navigate = useNavigate();
     const location = useLocation();
+
+    const { checkAuth } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,7 +44,7 @@ function LoginForm() {
             const responseData = await response.json()
             localStorage.setItem("userToken", responseData.token);
             localStorage.setItem("userId", responseData.id);
-            setResponse(responseData);
+            checkAuth();
             const from = location.state?.from || "/"
             navigate(from)
         } catch(err) {

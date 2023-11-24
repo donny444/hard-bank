@@ -4,7 +4,9 @@ import HomePage from "./components/home";
 import LoginPage from "./components/login";
 import RegisterPage from "./components/register";
 import TransactionPage from "./components/transaction";
+import NotFoundPage from "./components/notfound";
 import ProtectedRoute from "./components/protectedroute";
+import RedirectIfAuthenticated from "./components/redirectifauthenticated";
 import { AuthProvider } from "./components/auth";
 
 function App() {
@@ -14,18 +16,26 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={
-            //<ProtectedRoute>
+            <ProtectedRoute>
               <HomePage />
-            //</ProtectedRoute>
+            </ProtectedRoute>
           } />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={
+            <RedirectIfAuthenticated>
+              <LoginPage />
+            </RedirectIfAuthenticated>
+          } />
+          <Route path="/register" element={
+            <RedirectIfAuthenticated>
+              <RegisterPage />
+            </RedirectIfAuthenticated>
+          } />
           <Route path="/transaction" element={
-            //<ProtectedRoute>
+            <ProtectedRoute>
               <TransactionPage />
-            //</ProtectedRoute>
+            </ProtectedRoute>
           } />
-          <Route path="*" element={<p>Not Found</p>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </AuthProvider>

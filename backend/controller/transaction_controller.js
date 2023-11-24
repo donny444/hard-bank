@@ -4,7 +4,11 @@ async function Transaction(req, res) {
     const { senderId, receiverUsername, amount } = req.body;
     try {
         if(!senderId ||!receiverUsername || !amount) {
-            return res.status(400).json({ message: "Sender, receiver usernames and amount are required" });
+            return res.status(400).json({ message: "Receiver usernames and amount are required" });
+        }
+
+        if(amount <= 0) {
+            return res.status(400).json({ message: "Amount have to be positive number"});
         }
 
         if(senderId === receiverUsername) {

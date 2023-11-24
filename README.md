@@ -23,8 +23,11 @@
 - Transaction
 ---
 ## Debugging
-- Home returns conflicted between frontend and backend
-- Frontend authentication
-- Logout Navbar
-- Frontend form validation
-- prop-types
+- [x] Home returns conflicted between frontend and backend
+- [x] Frontend authentication
+- [x] Logout Navbar
+- [x] Frontend form validation
+- [x] prop-types
+---
+## More Features
+- Profile Picture Uploading

@@ -4,15 +4,15 @@ async function Transaction(req, res) {
     const { senderId, receiverUsername, amount } = req.body;
     try {
         if(!senderId ||!receiverUsername || !amount) {
-            return res.status(400).json({ message: "Receiver usernames and amount are required" });
+            return res.status(406).json({ message: "Receiver usernames and amount are required" });
         }
 
         if(amount <= 0) {
-            return res.status(400).json({ message: "Amount have to be positive number"});
+            return res.status(406).json({ message: "Amount have to be positive number"});
         }
 
         if(senderId === receiverUsername) {
-            return res.status(400).json({ message: "Sender and receiver shouldn't be the same user" });
+            return res.status(406).json({ message: "Sender and receiver shouldn't be the same user" });
         }
 
         connection.beginTransaction(err => {
@@ -29,12 +29,12 @@ async function Transaction(req, res) {
                         });
                     }
                     if(results.length === 0) {
-                        return res.status(400).json({ message: "Sender not found"});
+                        return res.status(404).json({ message: "Sender not found"});
                     }
                     
                     const senderBalance = results[0].balance;
                     if(amount > senderBalance) {
-                        return res.status(400).json({ message: "Insufficient funds" });
+                        return res.status(409).json({ message: "Insufficient funds" });
                     }
                     connection.query(
                         "SELECT * FROM Users WHERE username = ?",
@@ -46,7 +46,7 @@ async function Transaction(req, res) {
                                 })
                             }
                             if(results.length === 0) {
-                                return res.status(400).json({ message: "Receiver not found"});
+                                return res.status(404).json({ message: "Receiver not found"});
                             }
                             const receiverId = results[0].id;
                             connection.query(
@@ -83,7 +83,7 @@ async function Transaction(req, res) {
                                                                 throw err;
                                                             });
                                                         }
-                                                        res.status(200).json({ message: "Transaction successful" });
+                                                        res.status(201).json({ message: "Transaction successful" });
                                                     });
                                                 }
                                             )

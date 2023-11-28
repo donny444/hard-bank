@@ -1,8 +1,5 @@
 require("dotenv").config();
-const express = require("express");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const auth = require("../middleware/auth.js");
 
 const connection = require("../database.js");
 
@@ -10,13 +7,13 @@ async function Register(req, res) {
     const { username, password } = req.body;
     try {
         if(!username || !password) {
-            return res.status(400).json({ message: "Usename and password are required" });
+            return res.status(406).json({ message: "Usename and password are required" });
         }
         if(username.length > 20) {
-            return res.status(400).json({ message: "Username can't be more than 20 characters" })
+            return res.status(406).json({ message: "Username can't be more than 20 characters" })
         }
         if(password.length > 16) {
-            return res.status(400).json({ message: "Password can't be more than 16 characters" })
+            return res.status(406).json({ message: "Password can't be more than 16 characters" })
         }
         connection.query(
             "SELECT * FROM users WHERE username =?",

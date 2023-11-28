@@ -1,8 +1,6 @@
 require("dotenv").config();
-const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const auth = require("../middleware/auth.js");
 
 const connection = require("../database.js");
 
@@ -10,7 +8,7 @@ async function Login(req, res) {
     const { username, password } = req.body;
     try {
         if(!username || !password) {
-            return res.status(400).json({ message: "Usename and password are required" });
+            return res.status(406).json({ message: "Usename and password are required" });
         }
         connection.query(
             "SELECT * FROM users WHERE username =?",

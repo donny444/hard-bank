@@ -9,6 +9,6 @@ const route = express.Router();
 route.post("/", auth, Home);
 route.post("/login", Login);
 route.post("/register", Register);
-route.post("/transaction", Transaction);
+route.post("/transaction", auth, Transaction);
 
 module.exports = route;

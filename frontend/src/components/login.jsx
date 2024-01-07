@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBar from "./navbar";
 import { useAuth } from "./auth";
 
@@ -18,7 +18,6 @@ function LoginForm() {
     const [error, setError] = useState(null);
     
     const navigate = useNavigate();
-    const location = useLocation();
 
     const { checkAuth } = useAuth();
 
@@ -45,8 +44,7 @@ function LoginForm() {
             localStorage.setItem("userToken", responseData.token);
             localStorage.setItem("userId", responseData.id);
             checkAuth();
-            const from = location.state?.from || "/"
-            navigate(from)
+            navigate("/")
         } catch(err) {
             setError(err.message)
         }

@@ -1,5 +1,7 @@
 ## Tech Stack
 
+A financial website for transferring account balance to other users in the system. Using knowledge of authentication, relational database CRUD and transaction.
+
 **Front-End**
 - Vite
 - React
@@ -31,3 +33,4 @@
 ---
 ## More Features
 - Profile Picture Uploading
+- Account Transaction History

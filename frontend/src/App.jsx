@@ -3,6 +3,7 @@ import HomePage from "./components/home";
 import LoginPage from "./components/login";
 import RegisterPage from "./components/register";
 import TransactionPage from "./components/transaction";
+import HistoryPage from "./components/history";
 import NotFoundPage from "./components/notfound";
 import ProtectedRoute from "./components/protectedroute";
 import RedirectIfAuthenticated from "./components/redirectifauthenticated";
@@ -32,6 +33,11 @@ function App() {
           <Route path="/transaction" element={
             <ProtectedRoute>
               <TransactionPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/history" element={
+            <ProtectedRoute>
+              <HistoryPage />
             </ProtectedRoute>
           } />
           <Route path="*" element={<NotFoundPage />} />

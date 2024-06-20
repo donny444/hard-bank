@@ -65,6 +65,7 @@ function Home() {
                         </div>
                     </div>
                     <Link to="/transaction"><button className="transfer-button">Transfer</button></Link>
+                    <Link to="/history"><button className="history-button">History</button></Link>
                 </div>
             }
         </div>

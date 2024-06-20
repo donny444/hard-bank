@@ -3,7 +3,7 @@ const connection = require("../database.js");
 async function Transaction(req, res) {
     const { senderId, receiverUsername, amount } = req.body;
     try {
-        if(!senderId ||!receiverUsername || !amount) {
+        if(!senderId || !receiverUsername || !amount) {
             return res.status(406).json({ message: "Receiver usernames and amount are required" });
         }
 
@@ -20,7 +20,7 @@ async function Transaction(req, res) {
                 throw err;
             }
             connection.query(
-                "SELECT * FROM Users WHERE id = ?",
+                "SELECT * FROM users WHERE id = ?",
                 [senderId],
                 async (err, results) => {
                     if(err) {
@@ -37,7 +37,7 @@ async function Transaction(req, res) {
                         return res.status(409).json({ message: "Insufficient funds" });
                     }
                     connection.query(
-                        "SELECT * FROM Users WHERE username = ?",
+                        "SELECT * FROM users WHERE username = ?",
                         [receiverUsername],
                         (err, results) => {
                             if(err) {
@@ -50,7 +50,7 @@ async function Transaction(req, res) {
                             }
                             const receiverId = results[0].id;
                             connection.query(
-                                "UPDATE Users SET balance = balance - ? WHERE id = ?",
+                                "UPDATE users SET balance = balance - ? WHERE id = ?",
                                 [amount, senderId],
                                 (err, results) => {
                                     if(err) {
@@ -60,7 +60,7 @@ async function Transaction(req, res) {
                                     }
 
                                     connection.query(
-                                        "UPDATE Users SET balance = balance + ? WHERE username =?",
+                                        "UPDATE users SET balance = balance + ? WHERE username =?",
                                         [amount, receiverUsername],
                                         (err, results) => {
                                             if(err) {
@@ -69,8 +69,8 @@ async function Transaction(req, res) {
                                                 });
                                             }
                                             connection.query(
-                                                "INSERT INTO Transactions VALUES (transaction_id, ?, ?, ?)",
-                                                [senderId, receiverId, amount],
+                                                "INSERT INTO transactions VALUES (transaction_id, ?, ?, ?, ?)",
+                                                [amount, Date.now(), senderId, receiverId],
                                                 (err, results) => {
                                                     if(err) {
                                                         connection.rollback(() => {

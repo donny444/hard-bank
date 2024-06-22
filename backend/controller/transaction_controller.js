@@ -70,7 +70,7 @@ async function Transaction(req, res) {
                                             }
                                             connection.query(
                                                 "INSERT INTO transactions VALUES (transaction_id, ?, ?, ?, ?)",
-                                                [amount, Date.now(), senderId, receiverId],
+                                                [amount, new Date(), senderId, receiverId],
                                                 (err, results) => {
                                                     if(err) {
                                                         connection.rollback(() => {

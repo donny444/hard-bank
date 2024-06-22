@@ -65,9 +65,14 @@ function History() {
 }
 
 function Transaction({ transaction }) {
+    const date = transaction.date_time.split("T")[0];
+    const time = transaction.date_time.split("T")[1].split(":").slice(0, 2).join(":");
+    
     return (
         <div className="transaction">
             <p className="transaction-username">{transaction.username}</p>
+            <p className="transaction-date">{date}</p>
+            <p className="transaction-time">{time}</p>
             <h3 className="transaction-amount">{transaction.amount}</h3>
         </div>
     )

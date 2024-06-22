@@ -24,7 +24,8 @@ function RegisterForm() {
         const options = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 username: username,
@@ -37,9 +38,11 @@ function RegisterForm() {
                 const errMsg= await response.text();
                 throw new Error(errMsg || "Failed to register");
             }
-            navigate("/login")
+            const responseData = await response.json();
+            alert(responseData.message);
+            navigate("/login");
         } catch(err) {
-            setError(err.message)
+            setError(err.message);
         }
     }
 

@@ -24,11 +24,11 @@ function TransferForm() {
         const options = {
             method: "POST",
             headers: {
-                "x-access-token": localStorage.getItem("userToken"),
+                "x-access-token": sessionStorage.getItem("userToken"),
+                "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                senderId: localStorage.getItem("userId"),
                 receiverUsername: receiverUsername,
                 amount: amount
             })
@@ -39,9 +39,11 @@ function TransferForm() {
                 const errMsg= await response.text();
                 throw new Error(errMsg || "Failed to perform transferring");
             }
-            navigate("/")
+            const responseData = await response.json();
+            alert(responseData.message);
+            navigate("/");
         } catch(err) {
-            setError(err.message)
+            setError(err.message);
         }
     }
     return (

@@ -7,12 +7,12 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const checkAuth = () => {
-    const token = localStorage.getItem("userToken");
+    const token = sessionStorage.getItem("userToken");
     setIsAuthenticated(!!token);
   };
 
   const logout = () => {
-    localStorage.removeItem("userToken");
+    sessionStorage.removeItem("userToken");
     setIsAuthenticated(false);
   };
 

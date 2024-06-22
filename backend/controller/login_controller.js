@@ -19,14 +19,15 @@ async function Login(req, res) {
                 }
                 if (results.length > 0 && (await bcrypt.compare(password, results[0].password))) {
                     const token = jwt.sign(
-                        { username: results[0].username },
+                        {
+                            id: results[0].id
+                        },
                         process.env.JWT_SECRET,
                         {
                             expiresIn: 60 * 60
                         }
                     )
-                    results[0].token = token;
-                    return res.status(200).json(results[0]);
+                    return res.status(200).json({ token: token });
                 }
                 else {
                     return res.status(401).json({ message: "Invalid Credentials" });

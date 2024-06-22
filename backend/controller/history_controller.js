@@ -1,7 +1,7 @@
 const connection = require("../database.js");
 
 async function History(req, res) {
-    const { id } = req.body;
+    const id = req.user.id;
     try {
         connection.query(
             "SELECT transactions.amount, transactions.date_time, users.username FROM transactions INNER JOIN users ON transactions.receiver_id = users.id WHERE sender_id=?",

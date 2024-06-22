@@ -1,9 +1,10 @@
 const connection = require("../database.js");
 
 async function Transfer(req, res) {
-    const { senderId, receiverUsername, amount } = req.body;
+    const id = req.user.id;
+    const { receiverUsername, amount } = req.body;
     try {
-        if(!senderId || !receiverUsername || !amount) {
+        if(!id || !receiverUsername || !amount) {
             return res.status(406).json({ message: "Receiver usernames and amount are required" });
         }
 
@@ -11,9 +12,9 @@ async function Transfer(req, res) {
             return res.status(406).json({ message: "Amount have to be positive number"});
         }
 
-        if(senderId === receiverUsername) {
-            return res.status(406).json({ message: "Sender and receiver shouldn't be the same user" });
-        }
+        // if(id === receiverUsername) {
+        //     return res.status(406).json({ message: "Sender and receiver shouldn't be the same user" });
+        // }
 
         connection.beginTransaction(err => {
             if (err) {
@@ -21,7 +22,7 @@ async function Transfer(req, res) {
             }
             connection.query(
                 "SELECT * FROM users WHERE id = ?",
-                [senderId],
+                [id],
                 async (err, results) => {
                     if(err) {
                         connection.rollback(() => {
@@ -51,7 +52,7 @@ async function Transfer(req, res) {
                             const receiverId = results[0].id;
                             connection.query(
                                 "UPDATE users SET balance = balance - ? WHERE id = ?",
-                                [amount, senderId],
+                                [amount, id],
                                 (err, results) => {
                                     if(err) {
                                         connection.rollback(() => {
@@ -70,7 +71,7 @@ async function Transfer(req, res) {
                                             }
                                             connection.query(
                                                 "INSERT INTO transactions VALUES (transaction_id, ?, ?, ?, ?)",
-                                                [amount, new Date(), senderId, receiverId],
+                                                [amount, new Date(), id, receiverId],
                                                 (err, results) => {
                                                     if(err) {
                                                         connection.rollback(() => {

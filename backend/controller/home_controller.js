@@ -3,10 +3,11 @@ require("dotenv").config();
 const connection = require("../database.js");
 
 async function Home(req, res) {
-    const { id } = req.body;
+    const id = req.user.id;
+    
     try {
         connection.query(
-            "SELECT * FROM Users WHERE id=?",
+            "SELECT username, balance FROM Users WHERE id=?",
             [id],
             async (err, results) => {
                 if(err) {

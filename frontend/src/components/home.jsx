@@ -22,12 +22,10 @@ function Home() {
             const options = {
                 method: "POST",
                 headers: {
-                    "x-access-token": localStorage.getItem("userToken"),
+                    "x-access-token": sessionStorage.getItem("userToken"),
+                    "Accept": "application/json",
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    id: localStorage.getItem("userId")
-                })
+                }
             }
 
             setLoading(true);

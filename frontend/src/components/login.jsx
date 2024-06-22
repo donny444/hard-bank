@@ -27,7 +27,8 @@ function LoginForm() {
         const options = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 username: username,
@@ -41,8 +42,7 @@ function LoginForm() {
                 throw new Error(errMsg || "Failed to login");
             }
             const responseData = await response.json()
-            localStorage.setItem("userToken", responseData.token);
-            localStorage.setItem("userId", responseData.id);
+            sessionStorage.setItem("userToken", responseData.token);
             checkAuth();
             navigate("/")
         } catch(err) {

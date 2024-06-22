@@ -11,6 +11,6 @@ route.post("/", auth, Home);
 route.post("/login", Login);
 route.post("/register", Register);
 route.post("/transfer", auth, Transfer);
-route.post("/history", History);
+route.post("/history", auth, History);
 
 module.exports = route;

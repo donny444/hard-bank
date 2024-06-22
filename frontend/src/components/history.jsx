@@ -67,10 +67,7 @@ function History() {
 function Transaction({ transaction }) {
     return (
         <div className="transaction">
-            <div className="transaction-users">
-                <p className="transaction-sender">{transaction.sender_id}</p>
-                <p className="transaction-receiver">{transaction.receiver_id}</p>
-            </div>
+            <p className="transaction-username">{transaction.username}</p>
             <h3 className="transaction-amount">{transaction.amount}</h3>
         </div>
     )

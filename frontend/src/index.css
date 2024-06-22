@@ -147,7 +147,7 @@ body {
     border: 2px solid #0A0A0A;
 }
 
-.transaction-form {
+.transfer-form {
     display: flex;
     flex-direction: column;
     width: 50%;
@@ -158,18 +158,18 @@ body {
     border-radius: 4px;
 }
 
-.transaction-field {
+.transfer-field {
     display: flex;
     flex-direction: column;
     height: 70px;
 }
 
-.transaction-label {
+.transfer-label {
     color: #0A0A0A;
     font-weight: bolder;
 }
 
-.transaction-input {
+.transfer-input {
     height: 1.8rem;
     background-color: #F5F5F5;
     color: #737373;
@@ -178,7 +178,7 @@ body {
     font-size: larger;
 }
 
-.transaction-submit {
+.transfer-submit {
     align-self: flex-end;
     text-align: center;
     background-color: #F5F5F5;
@@ -191,7 +191,7 @@ body {
     cursor: pointer;
 }
 
-.transaction-submit:hover {
+.transfer-submit:hover {
     border: 2px solid #0A0A0A;
 }
 
@@ -221,7 +221,7 @@ body {
         width: 85%
     }
 
-    .transaction-form {
+    .transfer-form {
         width: 85%;
     }
 
@@ -238,7 +238,7 @@ body {
         width: 90%;
     }
 
-    .transaction-field {
+    .transfer-field {
         width: 90%;
     }
 

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import HomePage from "./components/home";
 import LoginPage from "./components/login";
 import RegisterPage from "./components/register";
-import TransactionPage from "./components/transaction";
+import TransferPage from "./components/transfer";
 import HistoryPage from "./components/history";
 import NotFoundPage from "./components/notfound";
 import ProtectedRoute from "./components/protectedroute";
@@ -30,9 +30,9 @@ function App() {
               <RegisterPage />
             </RedirectIfAuthenticated>
           } />
-          <Route path="/transaction" element={
+          <Route path="/transfer" element={
             <ProtectedRoute>
-              <TransactionPage />
+              <TransferPage />
             </ProtectedRoute>
           } />
           <Route path="/history" element={

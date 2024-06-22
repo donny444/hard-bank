@@ -64,7 +64,7 @@ function Home() {
                             <h2 className="user-balance">Balance: {response.balance}</h2>
                         </div>
                     </div>
-                    <Link to="/transaction"><button className="transfer-button">Transfer</button></Link>
+                    <Link to="/transfer"><button className="transfer-button">Transfer</button></Link>
                     <Link to="/history"><button className="history-button">History</button></Link>
                 </div>
             }

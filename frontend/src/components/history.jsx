@@ -48,7 +48,7 @@ function History() {
     }, []);
 
     return (
-        <div>
+        <>
             {loading && <p>Loading</p>}
             {error && <p>Error: {error}</p>}
             {response &&
@@ -58,7 +58,7 @@ function History() {
                     ))}
                 </div>
             }
-        </div>
+        </>
     )
 }
 

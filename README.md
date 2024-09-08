@@ -1,6 +1,6 @@
 ## Tech Stack
 
-A financial website for transferring account balance to other users in the system. Using knowledge of authentication, relational database CRUD and transaction.
+A financial website for transferring account balance to other users in the system. Using knowledge of authentication, relational database CRUD operations and transaction.
 
 **Front-End**
 - Vite
@@ -16,13 +16,15 @@ A financial website for transferring account balance to other users in the syste
 **Features**
 - Authentication System
 - Account Balance
-- Transaction
+- Money Transferring
+- Transaction History
 
 **Routes**
 - Homepage
 - Login
 - Register
-- Transaction
+- Transfer
+- History
 ---
 ## Debugging
 - [x] Home returns conflicted between frontend and backend

@@ -1,0 +1,50 @@
+version: "3.8"
+
+volumes:
+  volume:
+  
+services:
+  frontend:
+    build: ./frontend
+    container_name: hardbank-frontend
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    container_name: hardbank-backend
+    ports:
+      - "3715:3715"
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    container_name: hardbank-database
+    image: mysql:8.0
+    volumes:
+      - volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  phpmyadmin:
+    container_name: hardbank-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: database
+    depends_on:
+      - database

@@ -1,10 +1,10 @@
-const mysql = require("mysql");
+require("dotenv").config();
+const mysql = require("mysql2");
 
-// XAMPP
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
+    password: process.env.MYSQL_ROOT_PASSWORD,
     database: "hardbank"
 })
 
